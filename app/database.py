@@ -37,10 +37,10 @@ async def db_start():
         date = (datetime.datetime.now().date() -
                 datetime.timedelta(days=1)).strftime('%Y-%m-%d')
         cur.execute(
-            "INSERT INTO tabs (date,id_user,marc) VALUES ('{date}' ,4,'+')".format(date=date))
+            "INSERT INTO tabs (date,id_user,marc) VALUES ('{date}' ,3,'+')".format(date=date))
         date = (datetime.datetime.now().date()).strftime('%Y-%m-%d')
         cur.execute(
-            "INSERT INTO tabs (date,id_user,marc) VALUES ('{date}' ,2,'-')".format(date=date))
+            "INSERT INTO tabs (date,id_user,marc) VALUES ('{date}' ,4,'-')".format(date=date))
 
     db.commit()
 
