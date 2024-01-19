@@ -5,8 +5,9 @@ from app import database as db
 from app import update
 from dotenv import load_dotenv
 from app import sendnotification as sn
-
 import os
+
+from app.log import log
 
 load_dotenv()
 bot = Bot(os.getenv('TOKEN'))
@@ -16,18 +17,21 @@ dp = Dispatcher(bot=bot)
 
 async def on_startup(_):
     await db.db_start()
-    print('bot started')
+    log('bot started')
 
 
 @dp.message_handler(commands=["start"])
 async def cmd_start(message: types.Message):
-
+    print()
+    log(message.from_user.full_name+": "+message.text)
     await message.answer(f"hi {message.from_user.first_name} ",
                          reply_markup=await kb.get_main_user_keyboard())
 
 
 @dp.message_handler(text="Зазначити")
 async def note(message: types.Message):
+    print()
+    log(message.from_user.full_name+": "+message.text)
     if message.from_user.id == await db.get_current_user_chat_id():
         await db.note_tab_mark_from_id(2)
         await update.run(await db.get_current_user_chat_id(), "{name} зазначив що помив посуд"
@@ -39,6 +43,9 @@ async def note(message: types.Message):
 
 @dp.message_handler(text="Відмінити")
 async def note(message: types.Message):
+    print()
+    log(message.from_user.full_name+": "+message.text)
+
     if message.from_user.id == await db.get_current_user_chat_id():
         await db.denote_tab_mark_from_id(2)
         await update.run(await db.get_current_user_chat_id(), "{name} зазначив що не помив посуд"
@@ -49,6 +56,9 @@ async def note(message: types.Message):
 
 @dp.message_handler(text="Таблиця")
 async def table(message: types.Message):
+    print()
+    log(message.from_user.full_name+": "+message.text)
+
     await message.answer('tab',
                          reply_markup=await kb.get_table_keyboard(
                              message.from_user.id))
@@ -56,11 +66,17 @@ async def table(message: types.Message):
 
 @dp.message_handler(text="Оновити")
 async def update_tab(message: types.Message):
+    print()
+    log(message.from_user.full_name+": "+message.text)
+
     await table(message)
 
 
 @dp.message_handler(text="Повернутись")
 async def beak(message: types.Message):
+    print()
+    log(message.from_user.full_name+": "+message.text)
+
     if await db.get_current_user_chat_id() == message.from_user.id:
         await message.answer(f"main",
                              reply_markup=await kb.get_main_user_keyboard())
@@ -80,6 +96,9 @@ async def beak(message: types.Message):
 
 @dp.message_handler(text="Змінити чергового")
 async def change_current_user(message: types.Message):
+    print()
+    log(message.from_user.full_name+": "+message.text)
+
 
     if await db.get_user_chat_id_from_id(1) == message.from_user.id:
         if await db.get_user_status_from_id(1) == 'change_tab':
@@ -93,6 +112,9 @@ async def change_current_user(message: types.Message):
 
 @dp.message_handler()
 async def other(message: types.Message):
+    print()
+    log(message.from_user.full_name+": "+message.text)
+
     async def change_tab(id):
         await message.answer("change_tab",
                              reply_markup=await kb.get_admin_change_tab_panel_keyboard(id))

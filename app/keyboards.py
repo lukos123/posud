@@ -1,9 +1,10 @@
 import datetime
 from aiogram.types import ReplyKeyboardMarkup
 from . import database as db
-
+from app.log import log
 
 async def get_main_user_keyboard():
+    log("get_main_user_keyboard")
     mark = await db.get_tab_marc_from_id(2)
     main = ReplyKeyboardMarkup(resize_keyboard=True, row_width=1)
     # main.add('1').add('2').add('3').add('4')
@@ -18,6 +19,7 @@ async def get_main_user_keyboard():
 
 
 async def get_table_keyboard(chat_id):
+    log(f"get_table_keyboard({chat_id})")
     temp_data = await db.get_tabs_all()
 
     temp_date = datetime.datetime.strptime(
@@ -57,6 +59,9 @@ async def get_table_keyboard(chat_id):
 
 
 async def get_admin_change_tab_panel_keyboard(id):
+    log(f"get_admin_change_tab_panel_keyboard({id})")
+    
+
     arr = []
     row_width = 1
     name = await db.get_user_name_from_id(await db.get_tab_id_user_from_id(id))
@@ -77,6 +82,7 @@ async def get_admin_change_tab_panel_keyboard(id):
 
 
 async def get_admin_user_change_keyboard():
+    log("get_admin_user_change_keyboard()")
 
     arr = []
     row_width = 1
