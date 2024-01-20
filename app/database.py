@@ -47,7 +47,7 @@ async def db_start():
 
 
 async def get_user_name_from_id(id):
-    
+
     name = cur.execute(
         "SELECT name FROM users WHERE id == {id}".format(id=id)).fetchone()[0]
     log(f"get_user_name_from_id({id}) -> {name}")
@@ -58,7 +58,7 @@ async def get_user_name_from_chat_id(chat_id):
     name = cur.execute(
         "SELECT name FROM users WHERE chat_id == {chat_id}".format(chat_id=chat_id)).fetchone()[0]
     log(f"get_user_name_from_chat_id({chat_id}) -> {name}")
-    
+
     return name
 
 
@@ -66,14 +66,14 @@ async def get_user_status_from_id(id):
     status = cur.execute(
         "SELECT status FROM users WHERE id == {id}".format(id=id)).fetchone()[0]
     log(f"get_user_status_from_id({id}) -> {status}")
-    
+
     return status
 
 
 async def get_user_status_from_name(name):
     status = cur.execute(
         "SELECT status FROM users WHERE name == '{name}'".format(name=name)).fetchone()[0]
-    
+
     log(f"get_user_status_from_name('{name}') -> {status}")
     return status
 
@@ -90,7 +90,7 @@ async def get_user_chat_id_from_name(name):
     chat_id = cur.execute(
         "SELECT chat_id FROM users WHERE name == '{name}'".format(name=name)).fetchone()[0]
     log(f"get_user_chat_id_from_name('{name}') -> {chat_id}")
-    
+
     return chat_id
 
 
@@ -98,7 +98,7 @@ async def get_user_chat_id_from_id(id):
     chat_id = cur.execute(
         "SELECT chat_id FROM users WHERE id == {id}".format(id=id)).fetchone()[0]
     log(f"get_user_chat_id_from_id({id}) -> {chat_id}")
-    
+
     return chat_id
 
 
@@ -106,7 +106,7 @@ async def get_tab_date_from_id(id):
     date = cur.execute(
         "SELECT date FROM tabs WHERE id == {id}".format(id=id)).fetchone()[0]
     log(f"get_tab_date_from_id({id}) -> {date}")
-    
+
     return date
 
 
@@ -114,7 +114,7 @@ async def get_tab_marc_from_id(id):
     marc = cur.execute(
         "SELECT marc FROM tabs WHERE id == {id}".format(id=id)).fetchone()[0]
     log(f"get_tab_marc_from_id({id}) -> {marc}")
-    
+
     return marc
 
 
@@ -122,7 +122,7 @@ async def get_tab_marc_from_date(date):
     marc = cur.execute(
         "SELECT marc FROM tabs WHERE date == '{date}'".format(date=date)).fetchone()[0]
     log(f"get_tab_marc_from_date('{date}') -> {marc}")
-    
+
     return marc
 
 
@@ -130,7 +130,7 @@ async def get_tab_id_user_from_date(date):
     id_user = cur.execute(
         "SELECT id_user FROM tabs WHERE date == '{date}'".format(date=date)).fetchone()[0]
     log(f"get_tab_id_user_from_date('{date}') -> {id_user}")
-    
+
     return id_user
 
 
@@ -138,28 +138,28 @@ async def get_tab_id_user_from_id(id):
     id_user = cur.execute(
         "SELECT id_user FROM tabs WHERE id == {id}".format(id=id)).fetchone()[0]
     log(f"get_tab_id_user_from_id({id}) -> {id_user}")
-    
+
     return id_user
 
 
 async def get_current_user_chat_id():
     chat_id = await get_user_chat_id_from_id(await get_tab_id_user_from_id(2))
     log(f"get_current_user_chat_id() -> {chat_id}")
-    
+
     return chat_id
 
 
 async def get_current_user_name():
     name = await get_user_name_from_id(await get_tab_id_user_from_id(2))
     log(f"get_current_user_name() -> {name}")
-    
+
     return name
 
 
 async def get_current_user_status():
     status = await get_user_status_from_id(await get_tab_id_user_from_id(2))
     log(f"get_current_user_status() -> {status}")
-    
+
     return status
 
 
@@ -168,12 +168,12 @@ async def get_tabs_all():
     tabs = cur.execute("SELECT * FROM tabs").fetchall()
     tabs = [{
         'date': tabs[0][1],
-        'id':tabs[0][2],
-        'marc':tabs[0][3]
+        'id': tabs[0][2],
+        'marc': tabs[0][3]
     }, {
         'date': tabs[1][1],
-        'id':tabs[1][2],
-        'marc':tabs[1][3]
+        'id': tabs[1][2],
+        'marc': tabs[1][3]
     }]
     log("get_tabs_all()")
 
@@ -184,7 +184,7 @@ async def note_tab_mark_from_id(id):
     cur.execute(
         "UPDATE tabs SET marc = '+' WHERE id == {id}".format(id=id))
     log(f"note_tab_mark_from_id({id}) ")
-    
+
     db.commit()
 
 
@@ -192,7 +192,7 @@ async def denote_tab_mark_from_id(id):
     cur.execute(
         "UPDATE tabs SET marc = '-' WHERE id == {id}".format(id=id))
     log(f"denote_tab_mark_from_id({id}) ")
-    
+
     db.commit()
 
 
@@ -200,7 +200,7 @@ async def set_admin_user_change(id):
     cur.execute(
         "UPDATE users SET user_change = {id} WHERE id == 1".format(id=id))
     log(f"set_admin_user_change({id}) ")
-    
+
     db.commit()
 
 
@@ -208,7 +208,7 @@ async def set_admin_status(status):
     cur.execute(
         "UPDATE users SET status = '{status}' WHERE id == 1".format(status=status))
     log(f"set_admin_status('{status}') ")
-    
+
     db.commit()
 
 
@@ -216,7 +216,7 @@ async def get_admin_user_change():
     user_change = cur.execute(
         "SELECT user_change FROM users WHERE id == 1").fetchone()[0]
     log(f"get_admin_user_change() -> {user_change}")
-    
+
     return user_change
 
 
@@ -225,7 +225,7 @@ async def set_tab_id_user_from_id(id_user):
     cur.execute(
         "UPDATE tabs SET id_user = '{id_user}' WHERE id == {id}".format(id_user=id_user, id=tab_id))
     log(f"set_tab_id_user_from_id({id_user})")
-    
+
     db.commit()
 
 
@@ -234,7 +234,7 @@ async def set_tab_marc(marc):
     cur.execute(
         "UPDATE tabs SET marc = '{marc}' WHERE id == {id}".format(id=id, marc=marc))
     log(f"set_tab_marc('{marc}')")
-    
+
     db.commit()
 
 
@@ -246,12 +246,11 @@ async def set_tab_second(marc):
     date = temp_date.strftime('%Y-%m-%d')
 
     if marc == "-":
-        
+
         id_user = await get_tab_id_user_from_id(1)
-        
 
     else:
-        
+
         id_user = ((await get_tab_id_user_from_id(1)) % 4)+1
         if id_user == 1:
             id_user = 2
@@ -263,8 +262,7 @@ async def set_tab_second(marc):
     cur.execute(
         "UPDATE tabs SET id_user = {id_user} WHERE id == 2".format(id_user=id_user))
     log(f"set_tab_second('{marc}')")
-    
-    
+
     db.commit()
 
 
@@ -273,9 +271,11 @@ async def set_days():
     # temp_date = datetime.datetime.strptime(
     #     await get_tab_date_from_id(2), '%Y-%m-%d').date() + datetime.timedelta(days=1)
 
-    date = (datetime.datetime.now().date() -
-                datetime.timedelta(days=1)).strftime('%Y-%m-%d')
-    temp_date = date.date() - datetime.timedelta(days=1)
+    # date = (datetime.datetime.now().date() -
+    #             datetime.timedelta(days=1)).strftime('%Y-%m-%d')
+    date = datetime.datetime.now().date().strftime('%Y-%m-%d')
+    temp_date = (datetime.datetime.now().date() -
+                 datetime.timedelta(days=1)).strftime('%Y-%m-%d')
     marc = "-"
     id_user = (await get_tab_id_user_from_id(2) % 4)+1
     if id_user == 1:
@@ -303,6 +303,5 @@ async def set_days():
         cur.execute(
             "UPDATE tabs SET id_user = {id_user} WHERE id == 2".format(id_user=id_user))
     log(f"set_days('{marc}')")
-    
 
     db.commit()
