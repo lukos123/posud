@@ -8,6 +8,7 @@ from dotenv import load_dotenv
 from . import keyboards as kb
 import os
 from app.log import log
+from app.log import log_in_line
 load_dotenv()
 bot = Bot(os.getenv('TOKEN'))
 
@@ -17,7 +18,7 @@ async def send_notification(sleep_for):
     while True:
         try:
             now = datetime.datetime.now()
-
+            log_in_line(f"chas : {now.hour}")
             await asyncio.sleep(sleep_for)
             if now.hour == 9:
                 log("now.hour == 9")
@@ -42,4 +43,3 @@ async def send_notification(sleep_for):
                 await asyncio.sleep(60*61)
         except Exception as e:
             log(e)
-
