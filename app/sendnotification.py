@@ -8,7 +8,7 @@ from dotenv import load_dotenv
 from . import keyboards as kb
 import os
 from app.log import log
-from app.log import log_in_line
+
 load_dotenv()
 bot = Bot(os.getenv('TOKEN'))
 
@@ -18,20 +18,23 @@ async def send_notification(sleep_for):
     while True:
         try:
             now = datetime.datetime.now()
-            log_in_line(f"1chas : {now.hour}")
+            log(f"1chas : {now.hour}", in_line=True)
             await asyncio.sleep(sleep_for)
-            log_in_line(f"2chas : {now.hour}")
+            log(f"2chas : {now.hour}", in_line=True)
             if now.minute == 15:
-                log("now.minute == 15")
+                log("now.minute == 15", after_line=True)
+                await asyncio.sleep(60)
+                log("now.minute == 16")
+
             if now.hour == 9:
-                log("now.hour == 9")
+                log("now.hour == 9", after_line=True)
                 name = await db.get_current_user_name()
                 await update.run(0, f"Сьогодні черга {name}")
                 await asyncio.sleep(60*61)
                 log("now.hour == 10")
 
             elif now.hour == 22:
-                log("now.hour == 22")
+                log("now.hour == 22", after_line=True)
 
                 # name = await db.get_current_user_name()
                 chat_id = await db.get_current_user_chat_id()
@@ -43,11 +46,11 @@ async def send_notification(sleep_for):
                 await asyncio.sleep(60*61)
                 log("now.hour == 23")
             elif now.hour == 1:
-                log("now.hour == 1")
+                log("now.hour == 1", after_line=True)
 
                 await db.set_days()
                 await asyncio.sleep(60*61)
                 log("now.hour == 2")
         except Exception as e:
-            log("ERROR")
+            log("ERROR", after_line=True)
             log(e)
