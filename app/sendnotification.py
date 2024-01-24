@@ -21,10 +21,10 @@ async def send_notification(sleep_for):
             log(f"1chas : {now.hour}", in_line=True)
             await asyncio.sleep(sleep_for)
             log(f"2chas : {now.hour}", in_line=True)
-            if now.minute == 15:
-                log("now.minute == 15", after_line=True)
+            if now.minute == 30:
+                log("now.minute == 30", after_line=True)
                 await asyncio.sleep(60)
-                log("now.minute == 16")
+                log("now.minute == 31")
 
             if now.hour == 9:
                 log("now.hour == 9", after_line=True)
