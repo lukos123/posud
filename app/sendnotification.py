@@ -23,15 +23,17 @@ async def send_notification(sleep_for):
             log(f"2chas : {now.hour}", in_line=True)
             if now.minute == 30:
                 log("now.minute == 30", after_line=True)
+                log("Before now.minute == 31")
                 await asyncio.sleep(60)
-                log("now.minute == 31")
+                log("After now.minute == 31")
 
             if now.hour == 9:
                 log("now.hour == 9", after_line=True)
                 name = await db.get_current_user_name()
                 await update.run(0, f"Сьогодні черга {name}")
+                log("Before now.hour == 10")
                 await asyncio.sleep(60*61)
-                log("now.hour == 10")
+                log("After now.hour == 10")
 
             elif now.hour == 22:
                 log("now.hour == 22", after_line=True)
@@ -43,14 +45,16 @@ async def send_notification(sleep_for):
                     log(f"bot.send_message({chat_id},'Сьогодні твоя черга')")
                     await bot.send_message(chat_id, "Сьогодні твоя черга", reply_markup=await kb.get_main_user_keyboard())
 
+                log("Before now.hour == 23")
                 await asyncio.sleep(60*61)
-                log("now.hour == 23")
+                log("After now.hour == 23")
             elif now.hour == 1:
                 log("now.hour == 1", after_line=True)
 
                 await db.set_days()
+                log("Before now.hour == 2")
                 await asyncio.sleep(60*61)
-                log("now.hour == 2")
+                log("After now.hour == 2")
         except Exception as e:
             log("ERROR", after_line=True)
             log(e)

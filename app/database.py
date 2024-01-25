@@ -268,11 +268,6 @@ async def set_tab_second(marc):
 
 async def set_days():
 
-    # temp_date = datetime.datetime.strptime(
-    #     await get_tab_date_from_id(2), '%Y-%m-%d').date() + datetime.timedelta(days=1)
-
-    # date = (datetime.datetime.now().date() -
-    #             datetime.timedelta(days=1)).strftime('%Y-%m-%d')
     date = datetime.datetime.now().date().strftime('%Y-%m-%d')
     temp_date = (datetime.datetime.now().date() -
                  datetime.timedelta(days=1)).strftime('%Y-%m-%d')
